@@ -1,0 +1,49 @@
+{
+  "name": "executor",
+  "productName": "Executor",
+  "version": "1.0.0",
+  "description": "executor",
+  "main": "main.js",
+  "homepage": "https://consciousstage.com",
+  "author": {
+      "name": "Conscious Stage LTD",
+      "email": "support@consciousstage.com"
+  },
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "build": "electron-builder"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "python-shell": "^5.0.0",
+    "socket.io-client": "^4.7.2"
+  },
+  "build": {
+    "appId": "com.consciousstage.executor",
+    "productName": "Executor",
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Utility",
+      "icon": "renderer/assets/",
+      "desktop": {
+        "Name": "Executor",
+        "Comment": "Executor app",
+        "GenericName": "Executor App",
+        "StartupWMClass": "Executor"
+      }
+    },
+    "deb": {
+      "afterInstall": "after-install.sh"
+    },
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend"
+      }
+    ]
+  }
+}

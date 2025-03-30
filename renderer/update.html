@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Required</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+  <style>
+    body {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-[#131313] flex flex-col items-center justify-start p-4 text-gray-300 h-screen">
+  <!-- Main Container -->
+  <div class="w-full max-w-xs text-center space-y-3">
+    <div>
+      <img src="assets/logo-white.svg" class="w-24 mx-auto mb-2" alt="Logo">
+    </div>
+    
+    <div class="p-4">
+      <h2 class="text-lg font-semibold text-white-500 mb-2">Update Required</h2>
+      <p class="text-gray-400 text-sm mb-3">A new version is available. Please update to continue.</p>
+      
+      <button
+        id="update-btn"
+        class="w-full py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md shadow-md hover:bg-blue-700 transition duration-200 focus:outline-none"
+      >Download Latest Version</button>
+    </div>
+    
+    <div id="debug-info" class="text-xs text-gray-500"></div>
+
+  </div>
+    <script>
+        let downloadUrl = '';
+        // Store the URL when it's received
+        if (window.electron && window.electron.onDownloadUrl) {
+            window.electron.onDownloadUrl((url) => {
+                downloadUrl = url;
+            });
+        }
+        // Set up button click handler with error handling
+        document.getElementById("update-btn").addEventListener("click", async () => {
+            try {
+                await window.electron.openExternal(downloadUrl);
+            } catch (error) {
+                console.log(`Error opening URL: ${error.message}`);
+            }
+        });
+    </script>
+</body>
+</html>

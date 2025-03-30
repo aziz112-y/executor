@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No Internet Connection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+  <style>
+    body {
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-[#131313] flex flex-col items-center justify-start p-4 text-gray-300 h-screen">
+  <!-- Main Container -->
+  <div class="w-full max-w-xs text-center space-y-3">
+    <div>
+      <img src="assets/logo-white.svg" class="w-24 mx-auto mb-2" alt="Logo">
+    </div>
+    
+    <div class="p-4">
+      <h2 class="text-lg font-semibold text-white mb-2">No Internet Connection</h2>
+      <p class="text-gray-400 text-sm mb-3">Please check your internet connection and wait while we try again.</p>
+      
+      <div id="status-info" class="text-xs text-gray-500">Attempting to reconnect...</div>
+
+    </div>
+
+  </div>
+  
+  <script>
+    let attemptCount = 0;
+    let timer = 10;
+    let retryInterval;
+    let retryTimeout;
+
+    // Function to check internet connection
+    async function checkInternetConnection() {
+        return new Promise((resolve) => {
+            require("dns").resolve("google.com", (err) => {
+                resolve(!err);
+            });
+        });
+    }
+
+    // Function to handle retry logic
+    async function attemptConnection() {
+        attemptCount++;
+        const isConnected = await checkInternetConnection();
+
+        // Update status
+        document.getElementById('status-info').innerText = `Attempt ${attemptCount}: Checking connection...`;
+
+        if (!isConnected) {
+            // If no internet, update the debug info and retry
+            document.getElementById('debug-info').innerText = `Attempt ${attemptCount} failed. Retrying in ${timer} seconds...`;
+            
+            // Decrease timer and update every second
+            retryInterval = setInterval(() => {
+                if (timer <= 0) {
+                    clearInterval(retryInterval);
+                    attemptConnection();  // Retry after 10 seconds
+                    timer = 10;  // Reset timer
+                } else {
+                    document.getElementById('debug-info').innerText = `Attempt ${attemptCount} failed. Retrying in ${timer} seconds...`;
+                    timer--;
+                }
+            }, 1000);
+        } else {
+            // Internet connected, reload the window and close the error window
+            document.getElementById('debug-info').innerText = `Connection successful! Opening main app...`;
+            setTimeout(() => {
+                window.close();  // Close the error window
+                // Open the main app window
+                window.open("mainApp.html", "_self");
+            }, 3000);  // Wait 3 seconds before closing the error window
+        }
+    }
+
+    // Start the initial connection attempt
+    attemptConnection();
+  </script>
+</body>
+</html>

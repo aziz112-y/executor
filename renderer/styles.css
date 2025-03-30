@@ -1,0 +1,59 @@
+#log-content {
+    transition: max-height 0.3s ease;
+    overflow-y: auto;
+    max-height: 200px;
+    scrollbar-width: thin;
+    scrollbar-color: #4a4a4a #262626;
+}
+
+#log-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+#log-content::-webkit-scrollbar-track {
+    background: #262626;
+    border-radius: 3px;
+}
+
+#log-content::-webkit-scrollbar-thumb {
+    background-color: #4a4a4a;
+    border-radius: 3px;
+}
+
+.log-entry {
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: pre-wrap;
+}
+
+.mac-shadow {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.mac-button {
+    background: linear-gradient(to bottom, #3b82f6, #2563eb);
+}
+
+.mac-button:hover {
+    background: linear-gradient(to bottom, #4287f5, #2c6fef);
+}
+
+body {
+    background-color: #131313;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.connected-indicator {
+    background-color: #22c55e;
+}
+
+.disconnected-indicator {
+    background-color: #ef4444;
+}
+
+.error-indicator {
+    background-color: #ef4444;
+}
+.color-text{
+    color: white;
+}

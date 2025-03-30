@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Executor</title>
+  <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .log-container {
+      height: 150px;
+      overflow-y: auto;
+    }
+    .app-container {
+      height: 410px;
+      position: relative;
+    }
+    .content-wrapper {
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .bottom-bar {
+      margin-top: auto;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body class="bg-[#131313] p-4 m-0">
+  <!-- Main Container -->
+  <div class="w-full max-w-4xl mx-auto items-start">
+    <div class="w-full mx-auto flex items-start app-container">
+        <div class="w-1/4 h-full justify-start items-start">
+            <div>
+              <img src="assets/logo-white.svg" class="w-32" alt="Logo">
+            </div>
+        </div>
+      
+          <!-- Right-Side Content (Aligned as Block) -->
+        <div class="w-3/4 h-full content-wrapper">
+            <div class="flex flex-col space-y-6 flex-grow">
+              <!-- Connection Status -->
+              <div class="flex justify-start">
+                <div id="status" class="text-sm font-medium bg-[#1e1e1e] px-4 py-2 rounded-full text-gray-300 flex items-center">
+                  <!-- Reduced the status indicator size to w-1.5 h-1.5 and set default to red -->
+                  <div id="status-indicator" class="w-1.5 h-1.5 rounded-full mr-2"></div>
+                  <span id="status-text">Status: Disconnected</span>
+                </div>
+              </div>
+      
+              <!-- API Key Input -->
+              <div>
+                <div>
+                  <input
+                    type="text"
+                    id="machine-key-input"
+                    placeholder="Enter Machine API Key"
+                    class="w-full h-8 px-3 py-1 rounded-lg border border-gray-700 bg-[#1e1e1e] text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+      
+              <!-- Log Section (Collapsible) -->
+              <div>
+                <div class="border border-gray-700 rounded-lg bg-[#1e1e1e]">
+                  <div 
+                    id="log-header" 
+                    class="flex justify-between items-center p-3 cursor-pointer hover:bg-[#262626] transition-colors duration-200 rounded-lg"
+                    onclick="toggleLogs()"
+                  >
+                    <h2 class="text-sm font-medium text-gray-300">Console Logs</h2>
+                    <span 
+                      id="toggle-icon" 
+                      class="text-sm transform transition-transform duration-300 text-gray-400"
+                    >
+                      &#9660;
+                    </span>
+                  </div>
+                  <div 
+                    id="log-content" 
+                    class="hidden p-3 bg-[#262626] color-text rounded-b-lg"
+                  >
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Bottom Bar with Buttons -->
+            
+        </div>
+    </div>
+    <!-- Bottom Bar: Version and Buttons -->
+    <div class="bottom-bar p-2 flex justify-between items-center">
+        <!-- Version at bottom left -->
+        <div class="text-xs text-gray-500">
+          Executor v1.0.0
+        </div>
+        
+        <!-- Buttons at bottom right -->
+        <div class="flex gap-3">
+          <button 
+            id="disconnect-btn" 
+            class="px-3 py-1.5 text-gray-300 bg-[#262626] rounded-md hover:bg-[#333333] transition duration-200 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled
+          >
+            Disconnect
+          </button>
+          <button 
+            id="connect-btn" 
+            class="px-4 py-1.5 text-white bg-blue-600 rounded-md shadow transition duration-200 text-xs font-medium"
+          >
+            Connect
+          </button>
+        </div>
+      </div>
+  </div>
+
+  <script>
+    function toggleLogs() {
+      const logContent = document.getElementById('log-content');
+      const toggleIcon = document.getElementById('toggle-icon');
+      
+      if (logContent.classList.contains('hidden')) {
+        logContent.classList.remove('hidden');
+        toggleIcon.style.transform = 'rotate(180deg)';
+      } else {
+        logContent.classList.add('hidden');
+        toggleIcon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Function to update the status indicator's color:
+    function updateStatusIndicator(status) {
+      const indicator = document.getElementById('status-indicator');
+      // Change to green when connected; red when disconnected
+      if (status === 'connected') {
+        indicator.classList.remove('bg-red-500');
+        indicator.classList.add('bg-green-500');
+      } else {
+        indicator.classList.remove('bg-green-500');
+        indicator.classList.add('bg-red-500');
+      }
+    }
+
+    // Example usage:
+    // When connected: updateStatusIndicator('connected');
+    // When disconnected: updateStatusIndicator('disconnected');
+  </script>
+  <script src="renderer.js"></script>
+</body>
+</html>
