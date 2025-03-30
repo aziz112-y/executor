@@ -345,17 +345,14 @@ def main():
 if __name__ == "__main__":
     main()
 
-"""
-**Testing without GUI**
+# def main():
+#     machine_key = input("enter machine key: ")
+#     try:
+#         client = ScreenCaptureClient(machine_key)
+#         client.run()
+#     except Exception as e:
+#         logger.error(f"Client crashed: {e} - Restarting in 5 seconds...")
+#         time.sleep(5)
 
-def main():
-    machine_key = input("enter machine key: ")
-    try:
-        client = ScreenCaptureClient(machine_key)
-        client.run()
-    except Exception as e:
-        logger.error(f"Client crashed: {e} - Restarting in 5 seconds...")
-        time.sleep(5)
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

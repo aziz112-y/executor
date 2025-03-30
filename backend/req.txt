@@ -1,0 +1,11 @@
+requests
+websocket-client
+pyautogui
+pillow
+python-socketio
+pyscreenshot
+keyboard
+python-xlib
+python-dotenv
+socketio
+nuitka
